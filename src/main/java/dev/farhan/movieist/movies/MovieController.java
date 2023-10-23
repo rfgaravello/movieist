@@ -11,6 +11,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/movies")
 public class MovieController {
+String Genres;
+
+    {
+        Genres = "";
+    }
 
     @Autowired
     private MovieService service;
@@ -20,8 +25,13 @@ public class MovieController {
         return new ResponseEntity<List<Movie>>(service.findAllMovies(), HttpStatus.OK);
     }
 
-    @GetMapping("/{imdbId}")
+    @GetMapping("imdbId/{imdbId}")
     public ResponseEntity<Optional<Movie>> getSingleMovie(@PathVariable String imdbId){
         return new ResponseEntity<Optional<Movie>>(service.findMovieByImdbId(imdbId), HttpStatus.OK);
+    }
+
+    @GetMapping("/genres/{Genres}")
+    public ResponseEntity<List<Movie>> getMovies(@PathVariable("Genres") String genres){
+        return new ResponseEntity<List<Movie>>(service.findMovieByGenres(genres), HttpStatus.OK);
     }
 }
